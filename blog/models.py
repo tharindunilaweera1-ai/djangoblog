@@ -1,12 +1,13 @@
 from django.db import models
 from django.utils.text import slugify
 
+# Define STATUS_CHOICES before referencing it in the model
+STATUS_CHOICES = (
+    ('draft', 'Draft'),
+    ('published', 'Published'),
+)
+
 class Post(models.Model):
-    STATUS_CHOICES = [
-        ('draft', 'Draft'),
-        ('published', 'Published'),
-    ]
-    
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=False)
     content = models.TextField()

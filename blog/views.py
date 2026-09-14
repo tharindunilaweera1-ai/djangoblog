@@ -1,11 +1,10 @@
 from django.shortcuts import render
 
-# create your views here.
 def home(request):
-    return render(request, 'blog/home.html', {'title': 'This is the Djangoblog Homepage.'})
+    return render(request, 'blog/home.html', {'title': 'Home'})
 
 def about(request):
-    return render(request, "blog/about.html", {'content': 'This is the Djangoblog team.'})
+    return render(request, 'blog/about.html', {'content': 'About Page'})
 
 def contact(request):
-    return render(request, 'contact.html')
+    return render(request, 'blog/contact.html')
