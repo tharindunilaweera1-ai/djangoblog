@@ -1,18 +1,33 @@
 from django.db import models
 from django.utils.text import slugify
 
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
 class Post(models.Model):
     STATUS_CHOICES = [
-        ('draft', 'Draft'),
-        ('published', 'Published'),
+        ("draft", "Draft"),
+        ("published", "Published"),
     ]
-    
+
     title = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=250)
+    slug = models.SlugField(blank=True)
     content = models.TextField()
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='published')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="published")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name='posts')
+    tags = models.ManyToManyField('Tag', blank=True, related_name='posts')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    cover_image = models.ImageField(upload_to="post_covers/", blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -21,3 +36,9 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+class Tag(models.Model):
+    name = models.CharField(max_length=50)
+    def __str__(self):
+        return self.name
+    

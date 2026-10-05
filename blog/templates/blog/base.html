@@ -8,6 +8,16 @@
 <body>
     <nav class="navbar navbar-dark bg-dark px-3">
         <a class="navbar-brand" href="{% url 'home' %}">DjangoBlog</a>
+
+        <div class="d-flex flex-grow-1 align-items-center">
+            <div class="navbar-nav flex-row gap-3 ms-3 me-auto">
+                <a class="nav-link" href="{% url 'home' %}">Home</a>
+                <a class="nav-link" href="{% url 'about' %}">About</a>
+                <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+            </div>
+
+            <a class="btn btn-primary" href="{% url 'post_create' %}">New Post</a>
+        </div>
     </nav>
     <div class="container mt-4">
         {% block content %}
