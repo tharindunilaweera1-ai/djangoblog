@@ -1,5 +1,7 @@
 from django import forms
 from .models import Post
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 
 class PostForm(forms.ModelForm):
@@ -27,3 +29,11 @@ class PostForm(forms.ModelForm):
         if title and content and title.lower() in content.lower()[:50]:
             raise forms.ValidationError("Don't repeat the title verbatim at the start of the content.")
         return cleaned_data
+
+
+class RegisterForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ["username", "email", "password1", "password2"]

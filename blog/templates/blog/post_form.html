@@ -22,4 +22,36 @@
     <button type="submit" class="btn btn-primary w-100 mt-3">Save</button>
   </form>
 </div>
+<div id="cover-data"
+     data-current="{% if object and object.cover_image %}{{ object.cover_image.url }}{% endif %}"
+     hidden></div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const input = document.querySelector('input[type="file"]');
+    if (!input) return;
+
+    const current = document.getElementById("cover-data").dataset.current;
+
+    // Small preview image placed right under the file input
+    const preview = document.createElement("img");
+    preview.className = "rounded border mt-2";
+    preview.style.cssText = "max-width:150px; max-height:150px; object-fit:cover;";
+    if (current) {
+      preview.src = current;
+    } else {
+      preview.style.display = "none";
+    }
+    input.insertAdjacentElement("afterend", preview);
+
+    // Update the preview when a new file is chosen
+    input.addEventListener("change", function () {
+      const file = input.files[0];
+      if (file && file.type.startsWith("image/")) {
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = "block";
+      }
+    });
+  });
+</script>
 {% endblock %}

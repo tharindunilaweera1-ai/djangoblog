@@ -1,0 +1,130 @@
+body {
+    background-color: #f8f9fa;
+}
+
+ .navbar-brand {
+    font-weight: bold;
+    letter-spacing: 0.5px;
+ }
+
+ /* ---------- Categories ---------- */
+/* ---------- Categories (small, transparent, centered) ---------- */
+.cat-section {
+  width: fit-content;
+  max-width: 100%;
+  margin: 1.5rem auto;
+  padding: 10px 18px 14px;
+  border: 1px solid rgba(33, 37, 41, 0.15);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(6px);
+  text-align: center;
+}
+.cat-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 900;
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+.cat-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+.cat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 5px 3px 11px;
+  border: 1px solid rgba(33, 37, 41, 0.5);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.5);
+  color: #212529;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.cat-pill .cat-count {
+  background: rgba(33, 37, 41, 0.85);
+  color: #fff;
+  border-radius: 999px;
+  min-width: 20px;
+  padding: 1px 6px;
+  text-align: center;
+  font-size: 0.7rem;
+  transition: all 0.2s ease;
+}
+.cat-pill:hover {
+  background: #0d6efd;
+  border-color: #0d6efd;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
+}
+.cat-pill:hover .cat-count {
+  background: #fff;
+  color: #0d6efd;
+}
+
+/* ---------- Post detail page ---------- */
+.post-wrap {
+  max-width: 800px;
+  margin: 0 auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.post-headline {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 900;
+  font-size: 2.6rem;
+  line-height: 1.2;
+  color: #111;
+}
+.post-meta {
+  font-weight: 700;
+  color: #444;
+}
+
+/* Picture: sharp box border, blurred backdrop, image centered */
+.pic-box {
+  position: relative;
+  overflow: hidden;
+  border: 3px solid #212529;
+  border-radius: 12px;
+  background: #222;
+  height: 460px;
+}
+.pic-box::before {
+  content: "";
+  position: absolute;
+  inset: -20px;
+  background: var(--bg) center / cover no-repeat;
+  filter: blur(25px) brightness(0.85);
+}
+.pic-box img {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Text: soft blurred glow border */
+.text-box {
+  border: 2px solid rgba(13, 110, 253, 0.35);
+  border-radius: 1px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 18px 4px rgba(13, 110, 253, 0.35),
+              inset 0 0 14px rgba(13, 110, 253, 0.12);
+  backdrop-filter: blur(6px);
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.8;
+  color: #111;
+  white-space: pre-line;
+}
