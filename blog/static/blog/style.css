@@ -128,3 +128,8 @@ body {
   color: #111;
   white-space: pre-line;
 }
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}

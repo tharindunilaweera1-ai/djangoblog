@@ -1,6 +1,10 @@
+from tkinter import Image
+
 from django.db import models
 from django.utils.text import slugify
 from django.conf import settings
+from django.utils.text import slugify
+from PIL import Image
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -33,11 +37,20 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            base_slug = slugify(self.title) or "post"
+            slug = base_slug
+            counter = 1
+            while Post.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
         super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.title
+        if self.cover_image:
+            img_path = self.cover_image.path
+            img = Image.open(img_path)
+            if img.height > 800 or img.width > 800:
+                img.thumbnail((800, 800))
+                img.save(img_path)
 
 class Tag(models.Model):
     name = models.CharField(max_length=50)

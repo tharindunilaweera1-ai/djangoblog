@@ -7,6 +7,8 @@ from .forms import PostForm
 from .forms import PostForm, RegisterForm
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib import messages
+from django.db import models
 
 class RegisterView(CreateView):
     form_class = RegisterForm
@@ -43,7 +45,12 @@ class PostDetailView(DetailView):
     context_object_name = "post"
 
     def get_queryset(self):
-        return Post.objects.filter(status="published")
+        post = Post.objects.filter(status="published")
+        if self.request.user.is_authenticated:
+            post = Post.objects.filter(
+                models.Q(status="published") | models.Q(author=self.request.user)
+            )
+        return post
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -54,6 +61,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        messages.success(self.request, "Post published successfully!")
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -98,3 +106,7 @@ class MyPostsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Post.objects.filter(author=self.request.user).order_by("-created_at")
+    
+def custom_403(request, exception=None):
+    return render(request, "blog/403.html", status=403)
+    
